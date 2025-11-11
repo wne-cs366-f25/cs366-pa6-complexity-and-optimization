@@ -1,0 +1,92 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'edu.wne.cs366'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
+}
+
+application {
+    mainClass = 'PathfindingAlgorithms'
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = false
+    }
+
+    // Set heap size for tests
+    jvmArgs '-Xmx512m'
+
+    // Show test summary
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\nTest Results: ${result.resultType} " +
+                    "(${result.testCount} tests, " +
+                    "${result.successfulTestCount} passed, " +
+                    "${result.failedTestCount} failed, " +
+                    "${result.skippedTestCount} skipped)"
+        }
+    }
+}
+
+// Task to run with assertions enabled
+run {
+    enableAssertions = true
+    standardInput = System.in
+}
+
+// Custom task to run specific examples
+task runSimpleMap(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'PathfindingAlgorithms'
+    args = ['maps/test_simple.txt']
+}
+
+task runEuropeMap(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'PathfindingAlgorithms'
+    args = ['maps/small_europe.txt']
+}
+
+task runWorldMap(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'PathfindingAlgorithms'
+    args = ['maps/large_world.txt']
+}
+
+// Task to package assignment for submission
+task packageAssignment(type: Zip) {
+    from projectDir
+    include 'src/**'
+    include 'maps/**'
+    include 'build.gradle'
+    include 'README.md'
+    include 'ANALYSIS.md'
+    archiveFileName = "pa5-submission.zip"
+    destinationDirectory = file("$buildDir/distributions")
+
+    doLast {
+        println "Assignment package created: ${archiveFile}"
+    }
+}
