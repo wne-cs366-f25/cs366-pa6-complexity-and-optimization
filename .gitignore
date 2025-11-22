@@ -1,0 +1,40 @@
+# Compiled Java files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+bin/
+
+# macOS
+.DS_Store
+
+# Student submission files
+analysis.pdf
+analysis.txt
+
+# Instructor-only files
+KnapsackSolution.java
+test-solution.sh
+
+# Old assignment files (from previous year)
+*.doc.pdf
+
+# Backup files
+*~
+*.swp
+*.bak
