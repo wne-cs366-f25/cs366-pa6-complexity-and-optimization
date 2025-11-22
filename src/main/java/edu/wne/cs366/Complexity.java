@@ -85,9 +85,20 @@ public class Complexity {
      * @return Minimum coins, or -1 if impossible
      */
     public static int minCoins(int[] coins, int amount) {
-        // TODO: Implement bottom-up DP
         // dp[i] = min coins to make amount i
-        return -1; 
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1); // Initialize with a value > amount
+        dp[0] = 0;
+
+        for (int i = 1; i <= amount; i++) {
+            for (int coin : coins) {
+                if (i - coin >= 0) {
+                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+                }
+            }
+        }
+
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 
     // --- Part 2: Traveling Salesperson (Backtracking) ---
@@ -121,8 +132,34 @@ public class Complexity {
      * @return Minimum tour cost
      */
     public static int solveTSP(int[][] graph) {
-        // TODO: Implement recursive backtracking
-        return -1;
+        int n = graph.length;
+        boolean[] visited = new boolean[n];
+        visited[0] = true; // Start at city 0
+        
+        // Current cost, current city, count of visited, answer wrapper
+        int[] minCost = {Integer.MAX_VALUE};
+        
+        tspBacktrack(graph, visited, 0, n, 1, 0, minCost);
+        
+        return minCost[0];
+    }
+    
+    private static void tspBacktrack(int[][] graph, boolean[] visited, int currPos, int n, int count, int cost, int[] minCost) {
+        if (count == n && graph[currPos][0] > 0) {
+            minCost[0] = Math.min(minCost[0], cost + graph[currPos][0]);
+            return;
+        }
+        
+        // Pruning
+        if (cost >= minCost[0]) return;
+        
+        for (int i = 0; i < n; i++) {
+            if (!visited[i] && graph[currPos][i] > 0) {
+                visited[i] = true;
+                tspBacktrack(graph, visited, i, n, count + 1, cost + graph[currPos][i], minCost);
+                visited[i] = false;
+            }
+        }
     }
 
     // --- Part 3: SAT Verification ---
@@ -164,11 +201,24 @@ public class Complexity {
      * @param assignment Boolean array where index i corresponds to variable i (1-indexed)
      * @return true if satisfied, false otherwise
      */
-    public static boolean verifySAT(int[][] clauses, boolean[] assignment) {
-        // TODO: Check if every clause evaluates to true
-        // Clause is true if at least one literal is true
-        // Literal k is true if assignment[k] is true
-        // Literal -k is true if assignment[k] is false
-        return false;
+        public static boolean verifySAT(int[][] clauses, boolean[] assignment) {
+        for (int[] clause : clauses) {
+            boolean clauseSatisfied = false;
+            for (int literal : clause) {
+                // Literal k: true if assignment[k] is true
+                // Literal -k: true if assignment[k] is false
+                int varIndex = Math.abs(literal);
+                boolean varValue = assignment[varIndex];
+                
+                if (literal > 0) {
+                    if (varValue) clauseSatisfied = true;
+                } else {
+                    if (!varValue) clauseSatisfied = true;
+                }
+                if (clauseSatisfied) break;
+            }
+            if (!clauseSatisfied) return false;
+        }
+        return true;
     }
 }
