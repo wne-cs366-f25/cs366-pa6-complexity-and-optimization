@@ -8,11 +8,15 @@
 **Comparison:**
 In the 0/1 Knapsack problem (PA5), we had a constraint that each item could be used at most once. The recurrence relation `dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight] + value)` explicitly looked back at the *previous* row `i-1` to ensure we weren't reusing the current item `i`.
 
-In the Coin Change problem, we have an *unbounded* supply of each coin. Therefore, when considering coin `i`, we can look at the solution for the *same* row `i` (or just a 1D array `dp`) after subtracting the coin's value. This allows us to use the coin multiple times.
+In the Coin Change problem, we implemented a similar 2D table `dp[i][j]`, but with a key difference. Since we have an *unbounded* supply of each coin, when considering coin `i`, we can look at the solution for the *same* row `i` after subtracting the coin's value.
+- Knapsack (0/1): `dp[i][w] = max(dp[i-1][w], dp[i-1][w-wt] + val)`
+- Coin Change (Unbounded): `dp[i][j] = min(dp[i-1][j], dp[i][j-coin] + 1)`
+
+This small change in indices (looking at `dp[i]` instead of `dp[i-1]` for the inclusion case) allows the algorithm to "reuse" the current item multiple times in the same solution.
 
 **Recurrence Relation:**
-`dp[j] = min(dp[j], dp[j - coin_value] + 1)`
-Base case: `dp[0] = 0`, all other `dp` values initialized to infinity.
+`dp[i][j] = min(dp[i-1][j], dp[i][j - coin_value] + 1)`
+Base case: `dp[i][0] = 0`, all other `dp` values initialized to infinity.
 
 ## 2. TSP Complexity
 
@@ -37,7 +41,7 @@ For N=50, 50! is approximately $3 \times 10^{64}$. Even if a computer could chec
 ## 3. P vs NP & Satisfiability
 
 **Verification Complexity:**
-The `verifySAT` method iterates through each of the $M$ clauses. For each clause, it checks at most 3 literals (constant time lookups in the assignment array). Therefore, the verification takes **O(M)** time (linear with respect to the number of clauses). Since M is polynomial in input size, verification is in P.
+The `verifySAT` method iterates through each of the $M$ clauses. For each clause, it checks the literals in that clause (variable length in CNF, or fixed 3 in 3-SAT). Since the total number of literals is linear with respect to the input size (length of the formula), the verification takes **O(Length of Formula)** or **O(M * max_clause_size)** time. This is polynomial, so verification is in P.
 
 **Reduction Idea:**
 If we had a magic O(1) box for SAT, we could solve TSP by "reducing" TSP to SAT.
