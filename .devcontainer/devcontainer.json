@@ -7,7 +7,8 @@
     "ghcr.io/devcontainers/features/java:1": {
       "version": "21",
       "jdkDistro": "open",
-      "gradleVersion": "latest"
+      "gradleVersion": "latest",
+      "installGradle": "true"
     }
   },
   "runArgs": ["--name", "cs366-pa6-complexity-and-optimization"],
