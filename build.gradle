@@ -22,7 +22,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'PathfindingAlgorithms'
+    mainClass = 'edu.wne.cs366.Complexity'
 }
 
 test {
@@ -55,37 +55,17 @@ run {
     standardInput = System.in
 }
 
-// Custom task to run specific examples
-task runSimpleMap(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'PathfindingAlgorithms'
-    args = ['maps/test_simple.txt']
-}
-
-task runEuropeMap(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'PathfindingAlgorithms'
-    args = ['maps/small_europe.txt']
-}
-
-task runWorldMap(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'PathfindingAlgorithms'
-    args = ['maps/large_world.txt']
-}
-
 // Task to package assignment for submission
 task packageAssignment(type: Zip) {
     from projectDir
     include 'src/**'
-    include 'maps/**'
     include 'build.gradle'
     include 'README.md'
     include 'ANALYSIS.md'
-    archiveFileName = "pa5-submission.zip"
+    archiveFileName = "pa6-submission.zip"
     destinationDirectory = file("$buildDir/distributions")
 
     doLast {
-        println "Assignment package created: ${archiveFile}"
+        println "Assignment package created: ${archiveFile.get()}"
     }
 }
