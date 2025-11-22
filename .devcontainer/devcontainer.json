@@ -1,0 +1,49 @@
+{
+  "name": "cs366 - PA6 - Complexity and Optimization",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "jdkDistro": "open",
+      "gradleVersion": "latest"
+    }
+  },
+  "runArgs": ["--name", "cs366-pa6-complexity-and-optimization"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-gradle",
+        "vscjava.vscode-java-test",
+        "redhat.java",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-java-dependency",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay",
+        "java.format.enabled": true,
+        "java.test.config": {
+          "workingDirectory": "${workspaceFolder}"
+        },
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "zsh"
+          }
+        }
+      }
+    }
+  },
+  "remoteUser": "node",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+  "workspaceFolder": "/workspace"
+}
