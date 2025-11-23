@@ -1,0 +1,6 @@
+CC BY 4.0 License
+
+Copyright (c) 2025 Declan Gray-Mullen, Western New England University
+
+This work is licensed under CC BY 4.0. To view a copy of this license, visit:
+https://creativecommons.org/licenses/by/4.0/
