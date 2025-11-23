@@ -117,10 +117,19 @@ SAT
 1.  **Source Code**: `Complexity.java` in `edu.wne.cs366`.
 2.  **Analysis**: `ANALYSIS.md` or PDF.
 
+## Submission Process
+
+```bash
+tar -czf pa6-YOURNAME.zip /workspace
+```
+
+Download the file from the container and upload to Kodiak.
+
 ## Grading Criteria
 
-- **Implementation (60%)**: Correctness of all three algorithms.
-- **Analysis (40%)**: Depth of understanding of complexity classes and algorithmic behavior.
+- **Submission (33.3%):** Complete submission with all required files and components
+- **Completeness (33.3%):** All methods implemented, all analysis problems attempted
+- **Correctness (33.3%):** Accurate implementations, passing tests, and sound mathematical analysis
 
 **Due Date:** December 4, 11:59 PM
 **Late Policy:** 10% per day, maximum 5 days late.
